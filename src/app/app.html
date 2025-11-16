@@ -44,8 +44,6 @@
     </div>
   </div>
 
-
-
   <!-- Score Cards -->
   <div class="grid grid-cols-1 gap-6">
     <!-- Team 1 Score Card -->
@@ -76,19 +74,16 @@
       <div class="grid grid-cols-3 gap-1 w-full">
         <div class="col-span-1">
           <button (click)="recordHand('team1')" [disabled]="gameWinner" class="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 rounded-lg font-bold transition">
-            <!-- {{gameState.team1Name }} -->
             بردیم
           </button>
         </div>
         <div class="col-span-1">
           <button (click)="recordKot('team1')" [disabled]="gameWinner" class="w-full py-3 bg-teal-600 hover:bg-teal-700 disabled:bg-teal-800 rounded-lg font-semibold transition">
-            <!-- {{gameState.team1Name }} -->
             کُت کردیم
           </button>
         </div>
         <div class="col-span-1">
           <button (click)="decrementScore('team1')" [disabled]="gameWinner" class="w-full py-3 bg-yellow-600 hover:bg-yellow-700 disabled:bg-yellow-800 rounded-lg font-semibold transition">
-            <!-- {{gameState.team1Name }} -->
             اشتباه شد
           </button>
         </div>

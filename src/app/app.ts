@@ -24,6 +24,15 @@ interface GameState {
   history: HandHistory[];
 }
 
+interface GameState2 {
+  team1Name: string;
+  team2Name: string;
+  team1Score: number;
+  team2Score: number;
+  currentRulingTeam: 'team1' | 'team2';
+  currentSuit: '♠' | '♥' | '♦' | '♣' | '↑' | '↓';
+  history: HandHistory[];
+}
 @Component({
   imports: [RouterModule, CommonModule, FormsModule],
   selector: 'app-root',
