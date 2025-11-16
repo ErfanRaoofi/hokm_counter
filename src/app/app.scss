@@ -1,0 +1,50 @@
+// /* Custom styles for Tally Marks and animations */
+// .tally-mark-wrapper {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 8px; /* فاصله بین چوب‌کبریت‌ها */
+//   position: relative;
+//   width: 140px; /* عرض کانتینر برای 5 چوب‌کبریت */
+//   min-height: 40px; /* برای جلوگیری از پرش صفحه */
+// }
+
+// .tally-mark {
+//   display: block;
+//   width: 6px;
+//   height: 35px;
+//   background-color: #9ca3af; /* gray-400 */
+//   border-radius: 2px;
+//   transform: rotate(15deg); /* کمی کج برای زیبایی */
+//   transition: all 0.3s ease-in-out;
+// }
+
+// /* 
+//   این استایل برای خط پنجم (خط مورب) چوب کبریت است.
+//   با استفاده از سلکتور ngClass در HTML به المان پنجم اعمال می‌شود.
+// */
+// .tally-cross {
+//   position: absolute;
+//   top: 15px; /* موقعیت عمودی خط مورب */
+//   left: 0;
+//   width: 130px; /* عرض تقریبی 4 چوب کبریت + فاصله‌ها */
+//   height: 6px;
+//   background-color: #f87171; /* red-400 - برای دیده شدن بهتر */
+//   transform: rotate(-10deg); /* چرخش در جهت مخالف */
+//   z-index: 10;
+// }
+
+// /* انیمیشن ساده برای نمایش آیتم‌های تاریخچه */
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//     transform: translateY(-10px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+// .animate-fade-in {
+//   animation: fadeIn 0.5s ease-out forwards;
+// }

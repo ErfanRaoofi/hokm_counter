@@ -1,0 +1,18 @@
+/* Persian styles */
+@use './assets/font/fontawesome/index.scss' as *;
+
+@use './assets/font/index.scss' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  direction: rtl;
+  font-family: 'Vazirmatn FD', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  @apply h-dvh w-dvw overflow-y-auto m-0 touch-manipulation;
+}

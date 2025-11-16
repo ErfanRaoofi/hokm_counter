@@ -1,0 +1,156 @@
+<!-- Main container with dark background -->
+<div class="bg-gray-900 text-gray-200 min-h-screen font-sans p-4 sm:p-6 md:p-8 flex flex-col items-center">
+
+  <!-- Header -->
+  <header class="text-center mb-8">
+    <h1 class="text-4xl sm:text-5xl font-bold text-white mb-2">شمارنده امتیاز حُکم</h1>
+    <p class="text-lg text-gray-400">بازی را با دقت و بدون اشتباه ثبت کنید!</p>
+  </header>
+
+  <!-- Main content wrapper -->
+  <main class="w-full max-w-5xl mx-auto flex flex-col lg:flex-row gap-8">
+
+    <!-- Scoreboard and Game Over Section -->
+    <section class="w-full lg:w-3/5 flex flex-col gap-6">
+
+      <!-- Score Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Team 1 Score Card -->
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-blue-500 flex flex-col items-center gap-4">
+          <input type="text" [(ngModel)]="gameState.team1Name" (ngModelChange)="onNameChange()" class="bg-transparent text-2xl font-bold text-center w-full focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-md p-1" placeholder="نام تیم اول">
+          <div class="text-7xl font-mono font-extrabold text-blue-300">{{ gameState.team1Score }}</div>
+          <div class="tally-mark-wrapper">
+            <ng-container *ngFor="let i of getTallyArray(gameState.team1Score); let idx = index">
+              <span class="tally-mark" [class.tally-cross]="(idx + 1) % 5 === 0"></span>
+            </ng-container>
+          </div>
+          <!-- Score Correction Buttons -->
+          <div class="flex items-center gap-4 mt-2">
+            <button (click)="incrementScore('team1')" class="bg-green-600 hover:bg-green-700 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-transform transform hover:scale-110">
+              <!-- <fa-icon [icon]="faPlus"></fa-icon> -->
+               <i class="fa-solid fa-plus"></i>
+            </button>
+            <button (click)="decrementScore('team1')" class="bg-red-600 hover:bg-red-700 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-transform transform hover:scale-110">
+              <!-- <fa-icon [icon]="faMinus"></fa-icon> -->
+               <i class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Team 2 Score Card -->
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-red-500 flex flex-col items-center gap-4">
+          <input type="text" [(ngModel)]="gameState.team2Name" (ngModelChange)="onNameChange()" class="bg-transparent text-2xl font-bold text-center w-full focus:outline-none focus:ring-2 focus:ring-red-400 rounded-md p-1" placeholder="نام تیم دوم">
+          <div class="text-7xl font-mono font-extrabold text-red-300">{{ gameState.team2Score }}</div>
+          <div class="tally-mark-wrapper">
+            <ng-container *ngFor="let i of getTallyArray(gameState.team2Score); let idx = index">
+              <span class="tally-mark" [class.tally-cross]="(idx + 1) % 5 === 0"></span>
+            </ng-container>
+          </div>
+          <!-- Score Correction Buttons -->
+          <div class="flex items-center gap-4 mt-2">
+            <button (click)="incrementScore('team2')" class="bg-green-600 hover:bg-green-700 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-transform transform hover:scale-110">
+              <!-- <fa-icon [icon]="faPlus"></fa-icon> -->
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <button (click)="decrementScore('team2')" class="bg-red-600 hover:bg-red-700 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-transform transform hover:scale-110">
+              <!-- <fa-icon [icon]="faMinus"></fa-icon> -->
+              <i class="fa-solid fa-minus"></i>
+              
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Over Banner -->
+      <div *ngIf="gameWinner" class="bg-yellow-500 text-gray-900 p-6 rounded-xl shadow-lg text-center animate-fade-in">
+        <h3 class="text-3xl font-bold mb-2">
+          <!-- <fa-icon [icon]="faTrophy" class="mr-2"></fa-icon> -->
+          <i class="fa-solid fa-trophy mr-2"></i> بازی تمام شد!
+        </h3>
+        <p class="text-xl">
+          برنده: <span class="font-bold">{{ gameWinner === 'team1' ? gameState.team1Name : gameState.team2Name }}</span>
+        </p>
+        <button (click)="resetGame()" class="mt-4 bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition">
+          شروع بازی جدید
+        </button>
+      </div>
+    </section>
+
+    <!-- Game Controls Section -->
+    <aside class="w-full lg:w-2/5 flex flex-col gap-6">
+
+      <!-- Controls Card -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+        <!-- Ruler Selection -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 border-b-2 border-gray-600 pb-2 flex items-center gap-2">
+            <!-- <fa-icon [icon]="faCrown"></fa-icon> -->
+            <i class="fa-solid fa-crown"></i> انتخاب حاکم
+          </h3>
+          <div class="flex justify-around gap-2">
+            <button (click)="selectRulingTeam('team1')" [ngClass]="{'bg-blue-600 ring-2 ring-blue-300': gameState.currentRulingTeam === 'team1', 'bg-gray-700 hover:bg-gray-600': gameState.currentRulingTeam !== 'team1'}" class="w-full py-2 px-4 rounded-lg font-semibold transition">{{ gameState.team1Name }}</button>
+            <button (click)="selectRulingTeam('team2')" [ngClass]="{'bg-red-600 ring-2 ring-red-300': gameState.currentRulingTeam === 'team2', 'bg-gray-700 hover:bg-gray-600': gameState.currentRulingTeam !== 'team2'}" class="w-full py-2 px-4 rounded-lg font-semibold transition">{{ gameState.team2Name }}</button>
+          </div>
+        </div>
+
+        <!-- Suit Selection -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 border-b-2 border-gray-600 pb-2">انتخاب خال حُکم</h3>
+          <div class="flex justify-around">
+            <button *ngFor="let suit of suits" (click)="selectSuit(suit)" [ngClass]="{'bg-indigo-600 ring-2 ring-indigo-300': gameState.currentSuit === suit, 'bg-gray-700 hover:bg-gray-600': gameState.currentSuit !== suit}" class="w-12 h-12 text-2xl rounded-lg font-bold transition">{{ suit }}</button>
+          </div>
+        </div>
+
+        <!-- Record Hand -->
+        <div [ngClass]="{'opacity-50 cursor-not-allowed': gameWinner}">
+          <h3 class="text-xl font-semibold mb-3 border-b-2 border-gray-600 pb-2">ثبت نتیجه دست</h3>
+          <div class="flex flex-col gap-3">
+            <p class="text-gray-400 text-sm">کدام تیم این دست را برد؟</p>
+            <button (click)="recordHand('team1')" [disabled]="gameWinner" class="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed rounded-lg font-bold transition">{{ gameState.team1Name }} برد</button>
+            <button (click)="recordHand('team2')" [disabled]="gameWinner" class="w-full py-3 bg-red-600 hover:bg-red-700 disabled:bg-red-800 disabled:cursor-not-allowed rounded-lg font-bold transition">{{ gameState.team2Name }} برد</button>
+            <p class="text-gray-400 text-sm mt-2">یا کُت شد؟</p>
+            <div class="grid grid-cols-2 gap-3">
+              <button (click)="recordKot('team1')" [disabled]="gameWinner" class="py-3 bg-teal-600 hover:bg-teal-700 disabled:bg-teal-800 disabled:cursor-not-allowed rounded-lg font-semibold transition">{{ gameState.team1Name }} کُت کرد</button>
+              <button (click)="recordKot('team2')" [disabled]="gameWinner" class="py-3 bg-rose-600 hover:bg-rose-700 disabled:bg-rose-800 disabled:cursor-not-allowed rounded-lg font-semibold transition">{{ gameState.team2Name }} کُت کرد</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Card -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h3 class="text-xl font-semibold mb-4 border-b-2 border-gray-600 pb-2">تاریخچه بازی</h3>
+        <div class="max-h-64 overflow-y-auto pr-2">
+          <div *ngIf="gameState.history.length === 0" class="text-center text-gray-500 py-4">هنوز دستی بازی نشده است.</div>
+          <ul *ngIf="gameState.history.length > 0" class="space-y-3">
+            <li *ngFor="let hand of gameState.history; let i = index" class="bg-gray-700 p-3 rounded-lg flex justify-between items-center animate-fade-in">
+              <div class="flex items-center gap-3">
+                <span class="text-gray-400 font-mono text-sm">{{ gameState.history.length - i }}.</span>
+                <div>
+                  <span class="font-bold">{{ hand.winnerName }}</span>
+                  <span *ngIf="hand.isKot" class="ml-2 text-xs font-semibold px-2 py-0.5 rounded-full" [ngClass]="{'bg-rose-500 text-white': hand.isHakemKot, 'bg-teal-500 text-white': !hand.isHakemKot}">
+                    <!-- <fa-icon *ngIf="hand.isHakemKot" [icon]="faSkull" class="mr-1"></fa-icon> -->
+                    <i *ngIf="hand.isHakemKot" class="fa-solid fa-skull mr-1"></i>
+                    {{ hand.isHakemKot ? 'حاکم کُت' : 'کُت' }}
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xl font-bold">{{ hand.suit }}</span>
+                <span class="font-mono font-bold text-green-400">+{{ hand.points }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer with Reset Button -->
+  <footer class="mt-8 text-center">
+    <button (click)="resetGame()" class="bg-gray-700 hover:bg-rose-700 text-white font-bold py-2 px-6 rounded-lg transition-colors flex items-center gap-2 mx-auto">
+      <i class="fa-solid fa-rotate"></i> شروع مجدد بازی
+    </button>
+  </footer>
+
+</div>
