@@ -44,34 +44,7 @@
     </div>
   </div>
 
-  <!-- History Card -->
-   
-  
 
-  <!-- <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
-        <h3 class="text-xl font-semibold mb-4 border-b-2 border-gray-600 pb-2">تاریخچه بازی</h3>
-        <div class="max-h-64 overflow-y-auto pr-2">
-          <div *ngIf="gameState.history.length === 0" class="text-center text-gray-500 py-4">هنوز دستی بازی نشده است.</div>
-          <ul *ngIf="gameState.history.length > 0" class="space-y-3">
-            <li *ngFor="let hand of gameState.history; let i = index" class="bg-gray-700 p-3 rounded-lg flex justify-between items-center animate-fade-in">
-              <div class="flex items-center gap-3">
-                <span class="text-gray-400  text-sm">{{ gameState.history.length - i }}.</span>
-                <div>
-                  <span class="font-bold">{{ hand.winnerName }}</span>
-                  <span *ngIf="hand.isKot" class="ml-2 text-xs font-semibold px-2 py-0.5 rounded-full" [ngClass]="{'bg-rose-500 text-white': hand.isHakemKot, 'bg-teal-500 text-white': !hand.isHakemKot}">
-                    <i *ngIf="hand.isHakemKot" class="fa-solid fa-skull mr-1"></i>
-                    {{ hand.isHakemKot ? 'حاکم کُت' : 'کُت' }}
-                  </span>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-xl font-bold">{{ hand.suit }}</span>
-                <span class=" font-bold text-green-400">+{{ hand.points }}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> -->
 
   <!-- Score Cards -->
   <div class="grid grid-cols-1 gap-6">
