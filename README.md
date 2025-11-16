@@ -3,8 +3,11 @@ npx nx generate @nx/angular:library --directory=libs/auth/auth --name=auth --pub
 
 github-actions-token-eraoofi74
 docker login -u eraoofi74
+## dckr_pat_9mPUmFURtLE95anQfM6suY6qGZc
+
 
 DOCKERHUB_TOKEN
+## 6a63b5261c5dccaacfecf72e661b2fb74db9cae0 
 
 DOCKERHUB_USERNAME
 eraoofi74
